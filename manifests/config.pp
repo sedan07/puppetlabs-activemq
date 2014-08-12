@@ -18,12 +18,22 @@ class activemq::config (
 ) {
 
   # Resource defaults
-  File {
-    owner   => 'activemq',
-    group   => 'activemq',
-    mode    => '0644',
-    notify  => Service['activemq'],
-    require => Package[$package],
+  if activemq::local_install == false {
+    File {
+      owner   => 'activemq',
+      group   => 'activemq',
+      mode    => '0644',
+      notify  => Service['activemq'],
+      require => Package[$package],
+    }
+  } else {
+    File {
+      owner   => 'activemq',
+      group   => 'activemq',
+      mode    => '0644',
+      notify  => Service['activemq'],
+      require => Exec['mv-activemq'],
+    }
   }
 
   $server_config_real = $server_config

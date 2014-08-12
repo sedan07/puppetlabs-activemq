@@ -1,0 +1,55 @@
+# Class: activemq::local_install
+#
+#   ActiveMQ Local install from the pre-build binary release from the ActiveMQ site
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class activemq::local_install (
+  $download_url = 'http://apache.mirrors.lucidnetworks.net/activemq/5.10.0/apache-activemq-5.10.0-bin.tar.gz',
+  $install_dir  = '/opt',
+  $wrapper_cmd  = '/opt/activemq/bin/linux-x86-64/wrapper',
+  $wrapper_conf = '/opt/activemq/bin/linux-x86-64/wrapper.conf'
+) {
+
+  user { 'activemq':
+    ensure => present,
+    shell => '/sbin/nologin',
+    password => '!',
+    home => '/var/lib/activemq',
+    managehome => true,
+  } -> 
+  exec { 'download-activemq':
+    command => "wget ${download_url} -O apache-activemq-bin.tar.gz",
+    cwd => '/tmp',
+    unless => 'ls /opt/*activemq*',
+    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin'
+  } ->
+  exec { 'untar-activemq':
+    command => 'tar -C /opt -xf apache-activemq-bin.tar.gz',
+    cwd => '/tmp',
+    unless => 'ls /opt/*activemq*',
+    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin'
+  } ->
+  exec { 'mv-activemq':
+    command => 'mv /opt/apache-* /opt/activemq',
+    cwd => '/tmp',
+    unless => 'ls /opt/*activemq*',
+    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin'
+  }
+
+  # Manually adding the init script as this won't get added automatically
+  file { '/etc/init.d/activemq':
+    ensure  => file,
+    path    => '/etc/init.d/activemq',
+    content => template("${module_name}/init/activemq.local.erb"),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+  }
+}

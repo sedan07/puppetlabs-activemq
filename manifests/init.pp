@@ -30,12 +30,14 @@ class activemq(
   $ensure        = 'running',
   $instance      = 'activemq',
   $webconsole    = true,
-  $server_config = 'UNSET'
+  $server_config = 'UNSET',
+  $local_install = false,
 ) {
 
   validate_re($ensure, '^running$|^stopped$')
   validate_re($version, '^present$|^latest$|^[~+._0-9a-zA-Z:-]+$')
   validate_bool($webconsole)
+  validate_bool($local_install)
 
   $package_real = $package
   $version_real = $version
