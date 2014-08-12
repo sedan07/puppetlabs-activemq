@@ -18,7 +18,7 @@ class activemq::config (
 ) {
 
   # Resource defaults
-  if activemq::local_install == false {
+  if $activemq::local_install == false {
     File {
       owner   => 'activemq',
       group   => 'activemq',
