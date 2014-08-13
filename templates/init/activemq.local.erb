@@ -31,7 +31,7 @@ WRAPPER_CONF="<%= @wrapper_conf %>"
 PRIORITY=
 
 # Location of the pid file.
-PIDDIR="/var/run/${APP_NAME}"
+PIDDIR="<%= @pid_dir %>"
 
 # If uncommented, causes the Wrapper to be shutdown using an anchor file.
 #  When launched with the 'start' command, it will also ignore all INT and
