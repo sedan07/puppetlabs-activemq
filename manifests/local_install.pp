@@ -20,7 +20,7 @@ class activemq::local_install (
 
   user { 'activemq':
     ensure => present,
-    shell => '/sbin/nologin',
+    shell => '/bin/bash',
     password => '!',
     home => '/var/lib/activemq',
     managehome => true,
@@ -40,7 +40,7 @@ class activemq::local_install (
   exec { 'mv-activemq':
     command => 'mv /opt/apache-* /opt/activemq',
     cwd => '/tmp',
-    unless => 'ls /opt/*activemq*',
+    unless => 'ls /opt/activemq',
     path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin'
   } ->
   file { 'activemq-dir-root':
@@ -49,6 +49,22 @@ class activemq::local_install (
     recurse => true,
     owner => 'root',
     group => 'root'
+  } ->
+   file { 'activemq-dir-bin':
+    ensure => directory,
+    path => '/opt/activemq/bin',
+    recurse => true,
+    owner => 'root',
+    group => 'root',
+    mode => 0755
+  } ->
+  file { 'activemq-dir-lib':
+    ensure => directory,
+    path => '/opt/activemq/lib',
+    recurse => true,
+    owner => 'root',
+    group => 'root',
+    mode => 0755
   } ->
   file { 'activemq-data-dir':
     ensure => directory,

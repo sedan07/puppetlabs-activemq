@@ -18,6 +18,10 @@
         <managementContext>
             <managementContext createConnector="false"/>
         </managementContext>
+  
+        <persistenceAdapter>
+            <kahaDB directory="${activemq.data}/kahadb"/>
+        </persistenceAdapter>
 
         <plugins>
           <statisticsBrokerPlugin/>
