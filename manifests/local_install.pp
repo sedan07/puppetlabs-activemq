@@ -71,7 +71,8 @@ class activemq::local_install (
     path => '/opt/activemq/data',
     recurse => true,
     owner => 'activemq',
-    group => 'activemq'
+    group => 'activemq',
+    before => Service['activemq']
   }
 
   # Manually adding the init script as this won't get added automatically

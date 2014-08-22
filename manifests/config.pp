@@ -57,12 +57,21 @@ class activemq::config (
   }
 
   # The configuration file itself.
-  file { 'activemq.xml':
-    ensure  => file,
-    path    => $path_real,
-    owner   => '0',
-    group   => '0',
-    content => $server_config_real,
+  if $server_config_real =~ /^puppet:\/\// {
+    file { 'activemq.xml':
+      ensure  => file,
+      path    => $path_real,
+      owner   => '0',
+      group   => '0',
+      source  => $server_config_real,
+    }
+  } else {
+    file { 'activemq.xml':
+      ensure  => file,
+      path    => $path_real,
+      owner   => '0',
+      group   => '0',
+      content => $server_config_real,
+    }
   }
-
 }
