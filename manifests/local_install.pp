@@ -65,6 +65,13 @@ class activemq::local_install (
     owner => 'root',
     group => 'root',
     mode => 0755
+  } ->  
+  file { 'activemq-webapps-dir':
+    ensure => directory,
+    path => '/opt/activemq/webapps',
+    recurse => true,
+    owner => 'activemq',
+    group => 'activemq',
   } ->
   file { 'activemq-data-dir':
     ensure => directory,
