@@ -13,6 +13,7 @@
 class activemq::packages (
   $version,
   $package,
+  $overwrite_initd = true
 ) {
 
   validate_re($version, '^[~+._0-9a-zA-Z:-]+$')
@@ -26,7 +27,7 @@ class activemq::packages (
       notify  => Service['activemq'],
     }
 
-    if $::osfamily == 'RedHat' {
+    if $::osfamily == 'RedHat' && $overwrite_initd == true {
       # JJM Fix the activemq init script always exiting with status 0
       # FIXME This should be corrected in the upstream packages
       file { '/etc/init.d/activemq':

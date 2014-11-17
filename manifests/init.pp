@@ -25,13 +25,14 @@
 # }
 #
 class activemq(
-  $version       = 'present',
-  $package       = 'activemq',
-  $ensure        = 'running',
-  $instance      = 'activemq',
-  $webconsole    = true,
-  $server_config = 'UNSET',
-  $local_install = false,
+  $version        = 'present',
+  $package        = 'activemq',
+  $ensure         = 'running',
+  $instance       = 'activemq',
+  $webconsole     = true,
+  $server_config  = 'UNSET',
+  $local_install  = false,
+  $overwrite_initd = true
 ) {
 
   validate_re($ensure, '^running$|^stopped$')
@@ -58,9 +59,10 @@ class activemq(
   }
 
   class { 'activemq::packages':
-    version => $version_real,
-    package => $package_real,
-    notify  => Class['activemq::service'],
+    version         => $version_real,
+    package         => $package_real,
+    overwrite_initd => $overwrite_initd,
+    notify          => Class['activemq::service'],
   }
 
   class { 'activemq::config':
