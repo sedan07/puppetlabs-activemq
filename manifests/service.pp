@@ -20,8 +20,14 @@ class activemq::service(
 
   $ensure_real = $ensure
 
+  $start_on_boot =  $ensure_real ? {
+    'running' => true,
+    default   => false
+  }
+
   service { 'activemq':
     ensure     => $ensure_real,
+    enable     => $start_on_boot,
     hasstatus  => true,
     hasrestart => true,
     require    => Class['activemq::packages'],
