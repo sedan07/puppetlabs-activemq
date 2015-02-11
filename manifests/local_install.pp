@@ -11,12 +11,15 @@
 # Sample Usage:
 #
 class activemq::local_install (
-  $download_url = 'http://apache.mirrors.lucidnetworks.net/activemq/5.10.0/apache-activemq-5.10.0-bin.tar.gz',
-  $install_dir  = '/opt',
-  $wrapper_cmd  = '/opt/activemq/bin/linux-x86-64/wrapper',
-  $wrapper_conf = '/opt/activemq/bin/linux-x86-64/wrapper.conf',
-  $pid_dir      = '/opt/activemq/data'
+  $version,
+  $download_url_root  = 'http://apache.mirrors.lucidnetworks.net/activemq',
+  $install_dir        = '/opt',
+  $wrapper_cmd        = '/opt/activemq/bin/linux-x86-64/wrapper',
+  $wrapper_conf       = '/opt/activemq/bin/linux-x86-64/wrapper.conf',
+  $pid_dir            = '/opt/activemq/data'
 ) {
+
+  $download_url = "${download_url_root}/${version}/apache-activemq-${version}-bin.tar.gz"
 
   user { 'activemq':
     ensure => present,

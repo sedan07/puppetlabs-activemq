@@ -25,14 +25,14 @@
 # }
 #
 class activemq(
-  $version        = 'present',
-  $package        = 'activemq',
-  $ensure         = 'running',
-  $instance       = 'activemq',
-  $webconsole     = true,
-  $server_config  = 'UNSET',
-  $local_install  = false,
-  $overwrite_initd = true
+  $version          = 'present',
+  $package          = 'activemq',
+  $ensure           = 'running',
+  $instance         = 'activemq',
+  $webconsole       = true,
+  $server_config    = 'UNSET',
+  $local_install    = false,
+  $overwrite_initd  = true
 ) {
 
   validate_re($ensure, '^running$|^stopped$')
