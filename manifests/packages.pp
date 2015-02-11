@@ -37,7 +37,9 @@ class activemq::packages (
       }
     }
   } else {
-    include activemq::local_install
+    # include activemq::local_install
+    class { 'activemq::local_install':
+      version => $version,
+    }
   }
-
 }
