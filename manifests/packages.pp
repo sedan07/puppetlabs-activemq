@@ -12,6 +12,7 @@
 #
 class activemq::packages (
   $version,
+  $download_url_root,
   $package,
   $overwrite_initd = true
 ) {
@@ -41,7 +42,8 @@ class activemq::packages (
     }
   } else {
     class { 'activemq::local_install':
-      version => $version,
+      version             => $version,
+      download_url_root   => $download_url_root
     }
   }
 }

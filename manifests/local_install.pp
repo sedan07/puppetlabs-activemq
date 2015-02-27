@@ -12,7 +12,7 @@
 #
 class activemq::local_install (
   $version,
-  $download_url_root  = 'http://apache.mirrors.lucidnetworks.net/activemq',
+  $download_url_root,
   $install_dir        = '/opt',
   $wrapper_cmd        = '/opt/activemq/bin/linux-x86-64/wrapper',
   $wrapper_conf       = '/opt/activemq/bin/linux-x86-64/wrapper.conf',
@@ -20,6 +20,7 @@ class activemq::local_install (
 ) {
 
   $download_url = "${download_url_root}/${version}/apache-activemq-${version}-bin.tar.gz"
+  notify{"URL: ${download_url}": }
 
   user { 'activemq':
     ensure => present,
@@ -32,19 +33,19 @@ class activemq::local_install (
     command => "wget ${download_url} -O apache-activemq-bin.tar.gz",
     cwd => '/tmp',
     unless => 'ls /opt/*activemq*',
-    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin'
+    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/bin'
   } ->
   exec { 'untar-activemq':
     command => 'tar -C /opt -xf apache-activemq-bin.tar.gz',
     cwd => '/tmp',
     unless => 'ls /opt/*activemq*',
-    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin'
+    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/bin'
   } ->
   exec { 'mv-activemq':
     command => 'mv /opt/apache-* /opt/activemq',
     cwd => '/tmp',
     unless => 'ls /opt/activemq',
-    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin'
+    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/bin'
   } ->
   file { 'activemq-dir-root':
     ensure => directory,
