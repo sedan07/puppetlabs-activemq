@@ -17,7 +17,7 @@ define activemq::config::jetty_realm (
     incl    => $file,
     lens    => 'JettyRealm.lns',
     changes => [
-      "rm ${path_list}",
+      "rm user/${path_list}",
       "set user[last()+1]/username ${username}",
       "set user[last()]/password ${password}",
       "set user[last()]/realm ${realm_list}"
