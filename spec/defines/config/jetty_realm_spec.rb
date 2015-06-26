@@ -13,7 +13,7 @@ describe 'activemq::config::jetty_realm' do
     'incl' => '/etc/activemq/jetty-realm.properties',
     'lens' => 'JettyRealm.lns',
     'changes' => [
-      'rm user/username[.="demo"]',
+      'rm user[*][ username = "demo" ]',
       'set user[last()+1]/username demo',
       'set user[last()]/password guessme',
       'set user[last()]/realm guest'

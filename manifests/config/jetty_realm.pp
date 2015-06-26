@@ -11,13 +11,13 @@ define activemq::config::jetty_realm (
   $realm_list = join($realms, ",")
 
   $path_exact = "[ username = \"${username}\" and password = \"${password}\" and realm = \"${realm_list}\" ]"
-  $path_list = "username[.=\"${username}\"]"
+  $path_list = "[ username = \"${username}\" ]"
 
   augeas { "activemq/jetty-realm/${username}":
     incl    => $file,
     lens    => 'JettyRealm.lns',
     changes => [
-      "rm user/${path_list}",
+      "rm user[*]${path_list}",
       "set user[last()+1]/username ${username}",
       "set user[last()]/password ${password}",
       "set user[last()]/realm ${realm_list}"
