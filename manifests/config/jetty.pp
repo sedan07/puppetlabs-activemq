@@ -15,6 +15,7 @@ class activemq::config::jetty (
       "set ${admin_list} ${admin_authentication}",
     ],
     notify  => Service['activemq'],
+    require => Package['activemq'],
   }
 
   augeas { 'activemq/jetty/user_access':
@@ -24,5 +25,6 @@ class activemq::config::jetty (
       "set ${user_list} ${user_authentication}",
     ],
     notify  => Service['activemq'],
+    require => Package['activemq'],
   }
 }

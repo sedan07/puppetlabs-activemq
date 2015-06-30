@@ -19,6 +19,7 @@ class activemq::config::credentials (
       "set ${guest_password_list} ${guest_password}",
     ],
     notify  => Service['activemq'],
+    require => Package['activemq'],
   }
 
 }

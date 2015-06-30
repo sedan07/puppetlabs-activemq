@@ -24,5 +24,6 @@ define activemq::config::jetty_realm (
     ],
     onlyif  => "match user[*]${path_exact} size == 0",
     notify  => Service['activemq'],
+    require => Package['activemq'],
   }
 }
