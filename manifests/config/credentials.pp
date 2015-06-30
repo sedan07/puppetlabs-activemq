@@ -18,6 +18,7 @@ class activemq::config::credentials (
       "set ${activemq_password_list} ${activemq_password}",
       "set ${guest_password_list} ${guest_password}",
     ],
+    notify  => Service['activemq'],
   }
 
 }
