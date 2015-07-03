@@ -4,17 +4,19 @@ describe 'activemq::config::credentials' do
   let(:title) { 'test' }
 
     let(:params) { {
-      :activemq_username => 'wrapper.logfile.loglevel',
-      :activemq_password => 'DEBUG',
-      :guest_password    => 'hello',
-      :file     => '/opt/activemq/bin/linux-x86-64/wrapper.conf',
+      :activemq_username => 'system',
+      :activemq_password => 'Password',
+      :guest_password    => 'guessme',
+      :file     => '/opt/activemq/conf/credentials.properties',
     } }
 
-    it { should contain_augeas('activemq/wrapper/wrapper.logfile.loglevel').with({
-      'incl' => '/opt/activemq/bin/linux-x86-64/wrapper.conf',
+    it { should contain_augeas('activemq/credentials').with({
+      'incl' => '/opt/activemq/conf/credentials.properties',
       'lens' => 'Properties.lns',
       'changes' => [
-        'set wrapper.logfile.loglevel DEBUG',
+        "set activemq.username system",
+        "set activemq.password Password",
+        "set guest.password guessme",
       ]
     })}
 end
